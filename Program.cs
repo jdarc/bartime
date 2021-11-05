@@ -20,7 +20,7 @@ namespace BarTime
             notifyIcon.Visible = true;
             notifyIcon.ContextMenu = new ContextMenu(new[] {new MenuItem("Exit", (_, _) => Application.Exit())});
 
-            var bitmap = new Bitmap(128, 128, PixelFormat.Format32bppArgb);
+            var bitmap = new Bitmap(256, 256, PixelFormat.Format32bppArgb);
             var graphics = PrepareGraphics(bitmap);
 
             var timer = new System.Threading.Timer(_ =>
@@ -45,7 +45,7 @@ namespace BarTime
 
         private static void DrawClock(Image img, Graphics graphics, Font font, Color color, DateTime localTime)
         {
-            var penSize = 12f / (img.Width + 0.5f);
+            var penSize = 24f / (img.Width + 0.5f);
             using var solid = new Pen(color, penSize);
             using var faded = new Pen(Color.FromArgb(128, color), penSize);
             using var brush = new SolidBrush(Color.White);
@@ -67,10 +67,9 @@ namespace BarTime
 
         private static void DrawString(Graphics g, Font font, Brush brush, string str)
         {
-            const float off = 1f / 32f;
             var width = g.MeasureString(str, font).Width;
             var height = g.MeasureString(str, font, 0, new StringFormat(StringFormatFlags.DirectionVertical)).Height;
-            g.DrawString(str, font, brush, off - width / 2f, off - height / 2f);
+            g.DrawString(str, font, brush, -width / 2f, -height / 2f);
         }
 
         private static Graphics PrepareGraphics(Image bitmap)
