@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -69,9 +67,10 @@ namespace BarTime
 
         private static void DrawString(Graphics g, Font font, Brush brush, string str)
         {
+            const float off = 1f / 32f;
             var width = g.MeasureString(str, font).Width;
             var height = g.MeasureString(str, font, 0, new StringFormat(StringFormatFlags.DirectionVertical)).Height;
-            g.DrawString(str, font, brush, -width / 2f, -height / 2f);
+            g.DrawString(str, font, brush, off - width / 2f, off - height / 2f);
         }
 
         private static Graphics PrepareGraphics(Image bitmap)
