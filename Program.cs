@@ -30,7 +30,7 @@ namespace BarTime
                 notifyIcon.Text = DateTime.Now.ToLocalTime().ToShortTimeString();
                 notifyIcon.Icon?.Dispose();
                 notifyIcon.Icon = ConvertToIcon(bitmap);
-            }, null, 0, 1000);
+            }, null, 0, 10000);
 
             Application.ApplicationExit += (_, _) =>
             {
