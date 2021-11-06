@@ -13,7 +13,7 @@ namespace BarTime
 
         public static void Main()
         {
-            var font = new Font("Poppins", 0.4F, FontStyle.Bold);
+            var font = new Font("Tahoma", 0.4F, FontStyle.Bold);
 
             var notifyIcon = new NotifyIcon();
             notifyIcon.Icon = null;
@@ -67,9 +67,8 @@ namespace BarTime
 
         private static void DrawString(Graphics g, Font font, Brush brush, string str)
         {
-            var width = g.MeasureString(str, font).Width;
-            var height = g.MeasureString(str, font, 0, new StringFormat(StringFormatFlags.DirectionVertical)).Height;
-            g.DrawString(str, font, brush, -width / 2f, -height / 2f);
+            var size = g.MeasureString(str, font);
+            g.DrawString(str, font, brush, -size.Width / 2f, -size.Height / 2f);
         }
 
         private static Graphics PrepareGraphics(Image bitmap)
