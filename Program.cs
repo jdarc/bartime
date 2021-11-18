@@ -13,7 +13,7 @@ namespace BarTime
 
         public static void Main()
         {
-            var font = new Font("Tahoma", 0.4F, FontStyle.Bold);
+            var font = new Font("Tahoma", 0.35F, FontStyle.Bold);
 
             var notifyIcon = new NotifyIcon();
             notifyIcon.Icon = null;
@@ -27,7 +27,7 @@ namespace BarTime
             {
                 DrawClock(bitmap, graphics, font, Color.White, DateTime.Now.ToLocalTime());
 
-                notifyIcon.Text = DateTime.Now.ToLocalTime().ToShortTimeString();
+                notifyIcon.Text = GenerateText(DateTime.Now.ToLocalTime());
                 notifyIcon.Icon?.Dispose();
                 notifyIcon.Icon = ConvertToIcon(bitmap);
             }, null, 0, 10000);
@@ -42,6 +42,8 @@ namespace BarTime
 
             Application.Run();
         }
+
+        private static string GenerateText(DateTime now) => $"{now.ToShortTimeString()} - {now.ToLongDateString()}";
 
         private static void DrawClock(Image img, Graphics graphics, Font font, Color color, DateTime localTime)
         {
