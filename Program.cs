@@ -43,7 +43,7 @@ namespace BarTime
             Application.Run();
         }
 
-        private static string GenerateText(DateTime now) => $"{now.ToShortTimeString()} - {now.ToLongDateString()}";
+        private static string GenerateText(DateTime now) => $"{now.ToShortTimeString()} - {now:dd MMM yyyy}";
 
         private static void DrawClock(Image img, Graphics graphics, Font font, Color color, DateTime localTime)
         {
