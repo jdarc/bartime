@@ -1,32 +1,97 @@
-# User specific
-**/.idea/**/workspace.xml
-**/.idea/**/tasks.xml
-**/.idea/shelf/*
-**/.idea/dictionaries
-**/.idea/httpRequests/
-
-# Sensitive or high-churn files
-**/.idea/**/dataSources/
-**/.idea/**/dataSources.ids
-**/.idea/**/dataSources.xml
-**/.idea/**/dataSources.local.xml
-**/.idea/**/sqlDataSources.xml
-**/.idea/**/dynamic.xml
-
-# Rider auto-generates .iml files, and contentModel.xml
-**/.idea/**/*.iml
-**/.idea/**/contentModel.xml
-**/.idea/**/modules.xml
+# Rider
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/aws.xml
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/**/mongoSettings.xml
+.idea/**/*.iml
+.idea/artifacts
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/modules.xml
+.idea/modules
+.idea/httpRequests
+.idea/caches/build_file_checksums.ser
+.idea_modules/
+.idea/replstate.xml
+.vs/
 
 *.suo
+*.iml
+*.ipr
+*.iws
+*.pidb
 *.user
-.vs/
+*.userprefs
+*.usertasks
+*.resources
+
 [Bb]in/
 [Oo]bj/
-_UpgradeReport_Files/
 [Pp]ackages/
+out/
+cmake-build-*/
+test-results/
+_UpgradeReport_Files/
 /_ReSharper.Caches/
 
-Thumbs.db
-Desktop.ini
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Linux
+.directory
+.fuse_hidden*
+.nfs*
+.Trash-*
+
+*~
+
+# macOS 
+._*
 .DS_Store
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.com.apple.timemachine.donotpresent
+.DocumentRevisions-V100
+.fseventsd
+.LSOverride
+.Spotlight-V100
+.Trashes
+.TemporaryItems
+.VolumeIcon.icns
+
+Icon
+Network Trash Folder
+Temporary Items
+
+# Windows
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+*.stackdump
+
+$RECYCLE.BIN/
+
+[Dd]esktop.ini
+Thumbs.db
