@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -82,14 +83,26 @@ namespace BarTime
             return graphics;
         }
 
-        private static Icon ConvertToIcon(Bitmap bitmap)
+        private static Icon ConvertToIcon(Image bitmap)
         {
-            var iconHandle = bitmap.GetHicon();
+            using var resized = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
+            var iconHandle = ResizeImage(resized, bitmap).GetHicon();
             var tempManagedRes = Icon.FromHandle(iconHandle);
             var icon = (Icon) tempManagedRes.Clone();
             tempManagedRes.Dispose();
             DestroyIcon(iconHandle);
             return icon;
+        }
+
+        private static Bitmap ResizeImage(Bitmap resized, Image bitmap)
+        {
+            using var g = Graphics.FromImage(resized);
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.High;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.DrawImage(bitmap, new Rectangle(Point.Empty, resized.Size));
+            return resized;
         }
     }
 }
