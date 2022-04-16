@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BarTime")]
-[assembly: AssemblyCopyright("Copyright © Jean d'Arc 2021")]
+[assembly: AssemblyCopyright("Copyright © Jean d'Arc 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

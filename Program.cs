@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -22,12 +23,10 @@ namespace BarTime
             notifyIcon.ContextMenu = new ContextMenu(new[] {new MenuItem("Exit", (_, _) => Application.Exit())});
 
             var bitmap = new Bitmap(256, 256, PixelFormat.Format32bppArgb);
-            var graphics = PrepareGraphics(bitmap);
-
+            var g = PrepareGraphics(bitmap);
             var timer = new System.Threading.Timer(_ =>
             {
-                DrawClock(bitmap, graphics, font, Color.White, DateTime.Now.ToLocalTime());
-
+                DrawClock(bitmap, g, font, Color.White, DateTime.Now.ToLocalTime());
                 notifyIcon.Text = GenerateText(DateTime.Now.ToLocalTime());
                 notifyIcon.Icon?.Dispose();
                 notifyIcon.Icon = ConvertToIcon(bitmap);
@@ -35,7 +34,7 @@ namespace BarTime
 
             Application.ApplicationExit += (_, _) =>
             {
-                graphics.Dispose();
+                g.Dispose();
                 timer.Dispose();
                 bitmap.Dispose();
                 notifyIcon.Dispose();
@@ -46,18 +45,17 @@ namespace BarTime
 
         private static string GenerateText(DateTime now) => $"{now.ToShortTimeString()} - {now:dd MMM yyyy}";
 
-        private static void DrawClock(Image img, Graphics graphics, Font font, Color color, DateTime localTime)
+        private static void DrawClock(Image img, Graphics g, Font font, Color color, DateTime localTime)
         {
             var penSize = 24f / (img.Width + 0.5f);
             using var solid = new Pen(color, penSize);
             using var faded = new Pen(Color.FromArgb(128, color), penSize);
             using var brush = new SolidBrush(Color.White);
 
-            graphics.Clear(Color.Transparent);
-
-            DrawArc(graphics, faded, 360f);
-            DrawArc(graphics, solid, localTime.Minute / 60f * 360f);
-            DrawString(graphics, font, brush, localTime.ToString("HH"));
+            g.Clear(Color.Transparent);
+            DrawArc(g, faded, 360f);
+            DrawArc(g, solid, localTime.Minute / 60f * 360f);
+            DrawString(g, font, brush, localTime.ToString("HH"));
         }
 
         private static void DrawArc(Graphics g, Pen pen, float degrees)
@@ -76,11 +74,11 @@ namespace BarTime
 
         private static Graphics PrepareGraphics(Image bitmap)
         {
-            var graphics = Graphics.FromImage(bitmap);
-            graphics.ResetTransform();
-            graphics.ScaleTransform(bitmap.Width, bitmap.Height);
-            graphics.TranslateTransform(0.5f, 0.5f);
-            return graphics;
+            var g = HighGraphicsQuality(Graphics.FromImage(bitmap));
+            g.ResetTransform();
+            g.ScaleTransform(bitmap.Width, bitmap.Height);
+            g.TranslateTransform(0.5f, 0.5f);
+            return g;
         }
 
         private static Icon ConvertToIcon(Image bitmap)
@@ -96,13 +94,19 @@ namespace BarTime
 
         private static Bitmap ResizeImage(Bitmap resized, Image bitmap)
         {
-            using var g = Graphics.FromImage(resized);
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            g.InterpolationMode = InterpolationMode.High;
-            g.SmoothingMode = SmoothingMode.HighQuality;
+            using var g = HighGraphicsQuality(Graphics.FromImage(resized));
             g.DrawImage(bitmap, new Rectangle(Point.Empty, resized.Size));
             return resized;
+        }
+
+        private static Graphics HighGraphicsQuality(Graphics g)
+        {
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            return g;
         }
     }
 }
